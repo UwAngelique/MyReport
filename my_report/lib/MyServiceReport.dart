@@ -34,6 +34,14 @@ class _MyServiceReportState extends State<MyServiceReport> {
       appBar: AppBar(
         title: Text('Service Report'),
         backgroundColor: Color(0xFF87CEEB),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              // Handle settings action
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0), // Add margin to the left and right
@@ -130,7 +138,7 @@ class _MyServiceReportState extends State<MyServiceReport> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.note_add, size: 40, color: Color(0xFF87CEEB)),
+                          Icon(Icons.note_add, size: 40, color: Colors.black),
                           SizedBox(height: 10),
                           Text(
                             'Add Report',
@@ -154,7 +162,7 @@ class _MyServiceReportState extends State<MyServiceReport> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.person_add, size: 40, color: Color(0xFF87CEEB)),
+                          Icon(Icons.person_add, size: 40, color: Colors.black),
                           SizedBox(height: 10),
                           Text(
                             'Add New Person',
@@ -184,7 +192,7 @@ class _MyServiceReportState extends State<MyServiceReport> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.add_location, size: 40, color: Color(0xFF87CEEB)),
+                          Icon(Icons.add_location, size: 40, color: Colors.black),
                           SizedBox(height: 10),
                           Text(
                             'Add Visit',
@@ -208,7 +216,7 @@ class _MyServiceReportState extends State<MyServiceReport> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.alarm_add, size: 40, color: Color(0xFF87CEEB)),
+                          Icon(Icons.alarm_add, size: 40, color: Colors.black),
                           SizedBox(height: 10),
                           Text(
                             'Add Reminder',
@@ -241,7 +249,7 @@ class _MyServiceReportState extends State<MyServiceReport> {
                       child: Icon(
                         Icons.notifications, // Choose an appropriate icon
                         size: 30,
-                        color: Color(0xFF87CEEB), // Choose the color you prefer
+                        color: Colors.blue, // Choose the color you prefer
                       ),
                     ),
                     SizedBox(width: 10),
@@ -263,7 +271,7 @@ class _MyServiceReportState extends State<MyServiceReport> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xFF87CEEB),
+        selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
         items: [
