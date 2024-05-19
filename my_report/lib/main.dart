@@ -1,49 +1,35 @@
 import 'package:flutter/material.dart';
-
 import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
 import 'src/settings/settings_service.dart';
 import 'DbHandler.dart';
-import 'MyServiceReport.dart';
-// import 'package:flutter/material.dart';
+import 'MyServiceReport.dart'; // Updated import statement
 
-// void main() async {
-//   // Set up the SettingsController, which will glue user settings to multiple
-//   // Flutter Widgets.
-//   final settingsController = SettingsController(SettingsService());
-
-//   // Load the user's preferred theme while the splash screen is displayed.
-//   // This prevents a sudden theme change when the app is first displayed.
-//   await settingsController.loadSettings();
-
-//   // Run the app and pass in the SettingsController. The app listens to the
-//   // SettingsController for changes, then passes it further down to the
-//   // SettingsView.
-//   runApp(MyApp(settingsController: settingsController));
-// }
-void main() => runApp(const MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-    final  MyServiceReportImpl serviceReport = MyServiceReportImpl();
   const MyApp({Key? key}) : super(key: key);
 
   static const String _title = 'MyReport';
 
-
   @override
   Widget build(BuildContext context) {
+    final MyServiceReportImpl serviceReport = MyServiceReportImpl();
+
     return MaterialApp(
       title: _title,
       home: Scaffold(
         appBar: AppBar(title: const Text(_title)),
-        body: const MyStatefulWidget(),
+        body: MyStatefulWidget(serviceReport: serviceReport),
       ),
     );
   }
 }
 
 class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
+  final MyServiceReportImpl serviceReport;
+
+  const MyStatefulWidget({Key? key, required this.serviceReport}) : super(key: key);
 
   @override
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
@@ -121,7 +107,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 String password = passwordController.text;
                 bool isLoggedIn = await DbHandler.instance.login(email, password);
                 if (isLoggedIn) {
-                   serviceReport.openServiceReport(context);
+                  widget.serviceReport.openServiceReport(context);
                   // Navigate to the home screen or do whatever you need after successful login
                   print('Login successful!');
                 } else {
@@ -328,4 +314,3 @@ class SignUpPage extends StatelessWidget {
     );
   }
 }
-
