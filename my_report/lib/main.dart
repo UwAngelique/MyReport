@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'src/app.dart';
-import 'src/settings/settings_controller.dart';
-import 'src/settings/settings_service.dart';
 import 'DbHandler.dart';
 import 'MyServiceReport.dart'; // Updated import statement
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -99,7 +96,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.blue, // Set the button's background color
+                backgroundColor: Colors.blue, // Set the button's background color
               ),
               child: const Text('Login'),
               onPressed: () async {
@@ -116,14 +113,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text('Error'),
-                        content: Text('Invalid email or password.'),
+                        title: const Text('Error'),
+                        content: const Text('Invalid email or password.'),
                         actions: <Widget>[
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pop(); // Close the dialog
                             },
-                            child: Text('OK'),
+                            child: const Text('OK'),
                           ),
                         ],
                       );
@@ -134,6 +131,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             ),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               const Text('Does not have account?'),
               TextButton(
@@ -150,7 +148,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 },
               )
             ],
-            mainAxisAlignment: MainAxisAlignment.center,
           ),
         ],
       ),
@@ -163,6 +160,8 @@ class SignUpPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
+
+  SignUpPage({super.key});
 
   // Handle sign-up form submission
   void handleSignUp(BuildContext context) async {
@@ -179,14 +178,14 @@ class SignUpPage extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
-            content: Text('Passwords do not match.'),
+            title: const Text('Error'),
+            content: const Text('Passwords do not match.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the dialog
                 },
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -209,15 +208,15 @@ class SignUpPage extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Success'),
-            content: Text('You are registered successfully!.'),
+            title: const Text('Success'),
+            content: const Text('You are registered successfully!.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the dialog
                   Navigator.pop(context); // Go back to the previous screen (login page)
                 },
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -229,14 +228,14 @@ class SignUpPage extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
-            content: Text('Failed to sign up. Please try again later.'),
+            title: const Text('Error'),
+            content: const Text('Failed to sign up. Please try again later.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the dialog
                 },
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -259,46 +258,46 @@ class SignUpPage extends StatelessWidget {
           children: <Widget>[
             TextField(
               controller: fullNameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Full Name',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextField(
               controller: emailController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextField(
               controller: passwordController,
               obscureText: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Password',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextField(
               controller: confirmPasswordController,
               obscureText: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Confirm Password',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
+                backgroundColor: Colors.blue,
               ),
               onPressed: () {
                 handleSignUp(context); // Call handleSignUp function
               },
-              child: SizedBox(
+              child: const SizedBox(
                 width: double.infinity,
                 child: Center(
                   child: Text(

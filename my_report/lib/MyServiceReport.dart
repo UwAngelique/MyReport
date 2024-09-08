@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'MyServiceReport.dart';
+import 'DbHandler.dart';
 
 class MyServiceReport extends StatefulWidget {
+  const MyServiceReport({super.key});
+
   @override
   _MyServiceReportState createState() => _MyServiceReportState();
 }
 
 class _MyServiceReportState extends State<MyServiceReport> {
+  String targetHours = 'Loading...'; 
   double _progress = 0.0;
   int _selectedIndex = 0;
 
@@ -13,13 +18,32 @@ class _MyServiceReportState extends State<MyServiceReport> {
   void initState() {
     super.initState();
     // Simulate progress for demonstration purposes
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       setState(() {
         _progress = 0.7; // 70% progress
       });
     });
   }
-
+  Future<void> _loadTargetHours() async {
+    try {
+      List<Map<String, dynamic>> results = await DbHandler.instance.getServiceTargetsForCurrentMonth();
+      if (results.isNotEmpty) {
+        int totalHours = results.fold(0, (sum, row) => sum + (row['target_hours'] as int));
+        setState(() {
+          targetHours = '$totalHours hrs';
+        });
+      } else {
+        setState(() {
+          targetHours = 'No data available';
+        });
+      }
+    } catch (e) {
+      print("Error loading target hours: $e");
+      setState(() {
+        targetHours = 'Error loading data';
+      });
+    }
+  }
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -32,11 +56,11 @@ class _MyServiceReportState extends State<MyServiceReport> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Service Report'),
-        backgroundColor: Color(0xFF87CEEB),
+        title: const Text('Service Report'),
+        backgroundColor: const Color(0xFF87CEEB),
         actions: [
           IconButton(
-            icon: Icon(Icons.settings),
+            icon: const Icon(Icons.settings),
             onPressed: () {
               // Handle settings action
             },
@@ -70,21 +94,21 @@ class _MyServiceReportState extends State<MyServiceReport> {
                       style: TextStyle(fontSize: 16),
                     ),
                     Text(
-                      '50 hrs', // Example value
+                      targetHours, 
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             LinearProgressIndicator(
               value: _progress,
               backgroundColor: Colors.grey[300],
-              color: Color(0xFF87CEEB),
+              color: const Color(0xFF87CEEB),
               minHeight: 10,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -92,36 +116,36 @@ class _MyServiceReportState extends State<MyServiceReport> {
                   onPressed: () {
                     // Navigate to report details screen
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF87CEEB), // Background color
+                  ),
                   child: Text(
                     'View Report Details',
                     style: TextStyle(color: Colors.white), // Set text color
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Color(0xFF87CEEB), // Background color
                   ),
                 ),
                 ElevatedButton(
                   onPressed: () {
                     // Navigate to edit target screen
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF87CEEB), // Background color
+                  ),
                   child: Text(
                     'Edit Service Target',
                     style: TextStyle(color: Colors.white),
                   ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Color(0xFF87CEEB), // Background color
-                  ),
                 ),
               ],
             ),
-            SizedBox(height: 20),
-            Divider(), // Horizontal line separator
-            SizedBox(height: 10),
-            Text(
+            const SizedBox(height: 20),
+            const Divider(), // Horizontal line separator
+            const SizedBox(height: 10),
+            const Text(
               'My Service Ministry',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -135,7 +159,7 @@ class _MyServiceReportState extends State<MyServiceReport> {
                       onTap: () {
                         // Navigate to add report screen
                       },
-                      child: Column(
+                      child: const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.note_add, size: 40, color: Colors.black),
@@ -159,7 +183,7 @@ class _MyServiceReportState extends State<MyServiceReport> {
                       onTap: () {
                         // Navigate to add new person screen
                       },
-                      child: Column(
+                      child: const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.person_add, size: 40, color: Colors.black),
@@ -175,7 +199,7 @@ class _MyServiceReportState extends State<MyServiceReport> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -189,7 +213,7 @@ class _MyServiceReportState extends State<MyServiceReport> {
                       onTap: () {
                         // Navigate to add visit screen
                       },
-                      child: Column(
+                      child: const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.add_location, size: 40, color: Colors.black),
@@ -213,7 +237,7 @@ class _MyServiceReportState extends State<MyServiceReport> {
                       onTap: () {
                         // Navigate to add reminder screen
                       },
-                      child: Column(
+                      child: const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.alarm_add, size: 40, color: Colors.black),
@@ -229,18 +253,18 @@ class _MyServiceReportState extends State<MyServiceReport> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Upcomings',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             // Add your upcoming items here
-            Card(
+            const Card(
               color: Colors.white,
               elevation: 4,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.0),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -263,7 +287,7 @@ class _MyServiceReportState extends State<MyServiceReport> {
                 ),
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             // Add your reminder items here
           ],
         ),
@@ -274,7 +298,7 @@ class _MyServiceReportState extends State<MyServiceReport> {
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
