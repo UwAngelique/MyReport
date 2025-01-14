@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'MyServiceReport.dart';
 import 'DbHandler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyServiceReport extends StatefulWidget {
   const MyServiceReport({super.key});
@@ -24,13 +25,34 @@ class _MyServiceReportState extends State<MyServiceReport> {
       });
     });
   }
+   Future<void> _checkSession() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+    if (!isLoggedIn) {
+      // _navigateToLogin();
+    }
+  }
+
+  Future<void> _logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear(); // Clear session data
+    // _navigateToLogin();
+  }
+
+  // void _navigateToLogin() {
+  //   Navigator.pushReplacement(
+  //     context
+  //     MaterialPageRoute(builder: (context) => const MyApp()),
+  //   );
+  // }
   Future<void> _loadTargetHours() async {
     try {
       List<Map<String, dynamic>> results = await DbHandler.instance.getServiceTargetsForCurrentMonth();
       if (results.isNotEmpty) {
         int totalHours = results.fold(0, (sum, row) => sum + (row['target_hours'] as int));
         setState(() {
-          targetHours = '$totalHours hrs';
+          targetHours = '$totalHours hours';
         });
       } else {
         setState(() {
